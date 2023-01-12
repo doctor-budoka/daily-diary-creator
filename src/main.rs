@@ -4,6 +4,7 @@ use std::path::Path;
 use num_traits::cast::FromPrimitive;
 use chrono::prelude::{DateTime, Utc, Datelike, Month};
 use ordinal::Ordinal;
+use std::process::Command;
 
 const BASE_FOLDER: &str = "/Users/james/Dropbox/";
 
@@ -42,4 +43,7 @@ fn write_header_to_file(mut file: File, now: DateTime<Utc>) {
         Ok(_) => println!("Successfuly wrote today's diary file"),
         Err(_) => panic!("Error writing today's diary file!"),
     };
+
+    let dir_to_open = BASE_FOLDER.to_owned() + "/" + &now.year().to_string() + "-Diary/";
+    Command::new("code").arg(dir_to_open).status().expect("Opening VS Code failed!");
 }
